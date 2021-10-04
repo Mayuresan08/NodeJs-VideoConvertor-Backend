@@ -1,0 +1,22 @@
+{
+  "name": "videoConverter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "devStart": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "Mayuresan",
+  "license": "ISC",
+  "dependencies": {
+    "archiver": "^5.3.0",
+    "axios": "^0.22.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-zip": "^3.0.0",
+    "multer": "^1.4.3",
+    "nodemon": "^2.0.13"
+  }
+}
