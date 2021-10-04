@@ -1,3 +1,4 @@
+require('dotenv').config()
 const cors=require("cors")
 const express= require("express")
 
@@ -123,6 +124,7 @@ else
 }
 
 })
-app.listen(3002,()=>{
-    console.log("server running on Port 3002")
+
+app.listen(process.env.PORT,()=>{
+    console.log("server running on Port",process.env.PORT)
 })
