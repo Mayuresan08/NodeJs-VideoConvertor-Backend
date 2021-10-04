@@ -25,7 +25,7 @@ const mainDir ="public";
 
 const subDir1="public/uploads";
 const Dir2="output"
-
+//creating public and folder folder if not created
 if(!fs.existsSync(mainDir))
 {
     fs.mkdirSync(mainDir);
@@ -70,7 +70,7 @@ var upload = multer({
 app.get("/",(req,res,next)=>{
     res.send("Hello World")
 })
-
+//send converted format .m3u8 as zip-file
 app.post("/convert",upload.single("file"),(req,res)=>{
 console.log("in convert",req.file)
 if(!fs.existsSync(Dir2)) 
@@ -79,7 +79,7 @@ if(req.file){
     console.log(req.file.path)
 
     var output = "output.m3u8"
-
+    //excecuting shell operation to convert video
     exec(`ffmpeg -i ${req.file.path}  -f hls output/${output}`, (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
@@ -87,19 +87,7 @@ if(req.file){
         }
         else{
             console.log("file is converted",output)
-
-            //  res.status(200).sendFile(output,{ root: __dirname })
-            // res.send("ok")
-        // res.download(output,'output0.ts',(err) => {
-        //     if(err) throw err
-            
-        //     // fs.unlinkSync(req.file.path)
-        //     // fs.unlinkSync(output)
-
-        //     // next()
-
-        // })
-
+            //adding output.m3u8 along with hls segments to zip-file
             function handler()
             {
                 let arr=[{ path : 'output/output.m3u8', name : 'output.m3u8'}]
@@ -114,6 +102,8 @@ if(req.file){
             }
 
         res.zip(handler(),()=>{
+
+            //removing the original and converted files after sendind response
             fs.unlinkSync(req.file.path)
             fs.rmdir("output", { recursive: true }, (err) => {
                                 if (err) {
